@@ -1,0 +1,919 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Katie's Dating Concierge</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Katie's Dating Concierge manages your online dating for you: profile, matches, conversations and date plans. You just show up.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..600&family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a concierge "dossier". Each step of the service is a numbered file with its own video;
+   proof is shown as real phone screenshots; one oxblood band carries the scarcity message. */
+:root {
+  --paper: #F6F4F7;
+  --surface: #FFFFFF;
+  --ink: #1A1830;
+  --muted: #5F5B70;
+  --line: #E1DDE6;
+  --wine: #8A2246;
+  --wine-ink: #FFFFFF;
+  --blush: #F2E4EA;
+  --stage: #1A1830;
+  --stage-2: #3A1E33;
+  --stage-fg: #F3EEF6;
+
+  --display: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --body: "Hanken Grotesk", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.1875rem;
+  --step-2: 1.5rem;
+  --step-3: clamp(1.75rem, 1.3rem + 2vw, 2.5rem);
+  --step-4: clamp(2.4rem, 1.4rem + 4.4vw, 4.25rem);
+
+  --radius: 14px;
+  --wrap: 1180px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #100E17; --surface: #1A1724; --ink: #EEEAF3; --muted: #A6A0B5; --line: #2D2939;
+    --wine: #E27D9F; --wine-ink: #1C0C14; --blush: #2A1B26; --stage: #08070D; --stage-2: #2A1424; --stage-fg: #F3EEF6;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #100E17; --surface: #1A1724; --ink: #EEEAF3; --muted: #A6A0B5; --line: #2D2939;
+  --wine: #E27D9F; --wine-ink: #1C0C14; --blush: #2A1B26; --stage: #08070D; --stage-2: #2A1424; --stage-fg: #F3EEF6;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; animation: none !important; } }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font-family: var(--body); font-size: var(--step-0); line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--paper); }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+h1, h2, h3 { font-family: var(--display); font-weight: 500; line-height: 1.08; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+h1 em, h2 em, h3 em { font-style: italic; color: var(--wine); }
+p { margin: 0; }
+:focus-visible { outline: 2px solid var(--wine); outline-offset: 3px; border-radius: 4px; }
+
+.wrap {
+  max-width: var(--wrap); margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (min-width: 700px) { .wrap { padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); } }
+.section { padding-block: clamp(64px, 9vw, 120px); }
+.eyebrow { font-family: var(--mono); font-size: var(--step--1); letter-spacing: 0.14em; text-transform: uppercase; color: var(--wine); }
+.lede { font-size: var(--step-1); color: var(--muted); max-width: 58ch; }
+.section-head { display: grid; align-content: start; gap: 16px; max-width: 760px; margin-bottom: clamp(36px, 5vw, 64px); }
+.section-head h2 { font-size: var(--step-4); }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font: 600 var(--step-0)/1 var(--body); text-decoration: none; cursor: pointer;
+  padding: 16px 26px; border-radius: 999px; border: 1px solid transparent;
+  transition: transform .15s ease, background-color .15s ease, color .15s ease;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn-primary { background: var(--wine); color: var(--wine-ink); }
+.btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn-ghost:hover { border-color: var(--ink); }
+.btn .arrow { font-family: var(--mono); }
+
+/* Header */
+.site-header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 68px; }
+.brand { text-decoration: none; display: grid; line-height: 1; }
+.brand b { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 1.45rem; }
+.brand small { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.nav { display: none; gap: 28px; font-size: 0.95rem; }
+.nav a { text-decoration: none; color: var(--muted); }
+.nav a:hover { color: var(--ink); }
+.site-header .btn { padding: 11px 18px; font-size: 0.92rem; }
+@media (min-width: 900px) { .nav { display: flex; } }
+
+/* Video placeholder: swap each .video for <video controls poster="..." src="..."> when ready */
+.video {
+  position: relative; width: 100%; max-width: 100%; overflow: hidden; border-radius: var(--radius);
+  background:
+    radial-gradient(120% 90% at 85% 10%, var(--stage-2) 0%, transparent 60%),
+    radial-gradient(80% 70% at 0% 100%, color-mix(in srgb, var(--stage-2) 70%, transparent) 0%, transparent 70%),
+    var(--stage);
+  color: var(--stage-fg); isolation: isolate;
+}
+.video::after { /* faint film grain */
+  content: ""; position: absolute; inset: 0; z-index: -1; opacity: .18;
+  background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 3px);
+}
+.video.r-16x9 { aspect-ratio: 16 / 9; }
+.video.r-4x5 { aspect-ratio: 4 / 5; }
+.video.r-9x16 { aspect-ratio: 9 / 16; }
+.video .play {
+  position: absolute; left: 50%; top: 50%; translate: -50% -50%;
+  width: 72px; height: 72px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.45); background: rgba(255,255,255,.08);
+  display: grid; place-items: center; backdrop-filter: blur(4px);
+  transition: scale .2s ease, background-color .2s ease;
+}
+.video .play::before { content: ""; margin-left: 5px; border-left: 18px solid currentColor; border-block: 11px solid transparent; }
+.video:hover .play { scale: 1.06; background: rgba(255,255,255,.16); }
+.video .v-tag {
+  position: absolute; top: 14px; left: 14px; font-family: var(--mono); font-size: 0.7rem; letter-spacing: .12em; text-transform: uppercase;
+  padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18);
+}
+.video .v-meta { position: absolute; left: 16px; right: 16px; bottom: 14px; display: flex; justify-content: space-between; align-items: end; gap: 12px; }
+.video .v-title { font-family: var(--display); font-style: italic; font-size: 1.15rem; line-height: 1.2; }
+.video .v-len { font-family: var(--mono); font-size: 0.75rem; opacity: .8; white-space: nowrap; }
+
+/* Hero */
+.hero { padding-block: clamp(40px, 7vw, 96px) clamp(56px, 8vw, 104px); }
+.hero .wrap { display: grid; gap: clamp(40px, 6vw, 80px); align-items: center; }
+@media (min-width: 900px) { .hero .wrap { grid-template-columns: 1.1fr 0.9fr; } }
+.hero-copy { display: grid; gap: 24px; min-width: 0; }
+.hero h1 { font-size: clamp(2.8rem, 1.6rem + 5.4vw, 5.4rem); line-height: 1.02; }
+.hero .lede { font-size: var(--step-1); }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.pill-row { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 0.92rem; color: var(--muted); padding-top: 8px; border-top: 1px solid var(--line); }
+.pill-row span::before { content: "✓"; color: var(--wine); margin-right: 8px; font-weight: 700; }
+.hero-media { position: relative; min-width: 0; max-width: 460px; width: 100%; justify-self: center; }
+.update-card {
+  position: absolute; left: -12px; bottom: -28px; width: min(300px, 88%);
+  background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 12px;
+  padding: 14px 16px; box-shadow: 0 18px 40px -18px rgba(20, 10, 30, .45);
+  display: grid; gap: 6px; font-size: 0.88rem;
+}
+@media (min-width: 900px) { .update-card { left: -48px; } }
+.update-card .uc-top { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 0.68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.update-card .uc-top b { color: var(--wine); font-weight: 500; }
+.update-card strong { font-size: 1rem; }
+.update-card .uc-row { display: grid; grid-template-columns: 64px 1fr; gap: 8px; color: var(--muted); }
+.update-card .uc-row span:first-child { font-family: var(--mono); font-size: 0.75rem; padding-top: 2px; }
+.update-card .uc-row span:last-child { color: var(--ink); }
+
+/* Start here (intro videos) */
+.intro { background: var(--surface); border-block: 1px solid var(--line); }
+.intro-grid { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(220px, 72%); gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; }
+.intro-grid > figure { scroll-snap-align: start; margin: 0; display: grid; gap: 14px; min-width: 0; }
+@media (min-width: 760px) { .intro-grid { grid-auto-flow: row; grid-template-columns: repeat(3, 1fr); overflow: visible; } }
+.intro-grid figcaption { display: grid; gap: 4px; }
+.intro-grid figcaption b { font-size: var(--step-1); font-weight: 600; }
+.intro-grid figcaption span { color: var(--muted); font-size: 0.95rem; }
+
+/* Thesis band */
+.thesis .wrap { display: grid; gap: 40px; }
+@media (min-width: 900px) { .thesis .wrap { grid-template-columns: 1fr 1fr; align-items: end; } }
+.thesis h2 { font-size: var(--step-4); }
+.thesis-list { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.thesis-list div { display: grid; grid-template-columns: 1fr auto; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+.thesis-list s { color: var(--muted); text-decoration-thickness: 1px; }
+.thesis-list span { font-family: var(--mono); font-size: 0.8rem; color: var(--wine); text-transform: uppercase; letter-spacing: .1em; }
+
+/* Process */
+.steps { display: grid; gap: clamp(56px, 8vw, 104px); }
+.step { display: grid; gap: clamp(24px, 4vw, 56px); align-items: center; }
+@media (min-width: 900px) {
+  .step { grid-template-columns: 1.05fr 0.95fr; }
+  .step:nth-child(even) .step-media { order: 2; }
+}
+.step-media, .step-body { min-width: 0; }
+.step-body { display: grid; gap: 18px; }
+.step-num { display: flex; align-items: baseline; gap: 14px; }
+.step-num i { font-family: var(--display); font-style: italic; font-size: 3.6rem; line-height: .8; color: var(--wine); }
+.step-num span { font-family: var(--mono); font-size: var(--step--1); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.step h3 { font-size: var(--step-3); }
+.step p { color: var(--muted); max-width: 54ch; }
+.checks { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.checks li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; }
+.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 6px; border-radius: 50%; border: 1.5px solid var(--wine); background: radial-gradient(circle, var(--wine) 0 3px, transparent 3.5px); }
+.your-part {
+  display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; justify-self: start;
+  background: var(--blush); border-radius: 10px; padding: 12px 16px; font-size: 0.95rem;
+}
+.your-part b { font-family: var(--mono); font-weight: 500; font-size: 0.72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--wine); }
+
+/* Proof */
+.proof { background: var(--surface); border-block: 1px solid var(--line); }
+.letters { display: grid; gap: clamp(40px, 6vw, 72px); }
+.letter { display: grid; gap: 28px; align-items: center; }
+@media (min-width: 900px) {
+  .letter { grid-template-columns: 1fr 1fr; }
+  .letter.flip .shot { order: 2; }
+}
+.letter .shot { min-width: 0; justify-self: center; width: 100%; max-width: 520px; }
+.letter .shot.tall { max-width: 360px; }
+.shot img { border-radius: 16px; border: 1px solid var(--line); box-shadow: 0 30px 60px -30px rgba(20, 10, 30, .5); width: 100%; height: auto; }
+.letter blockquote { margin: 0; display: grid; gap: 18px; min-width: 0; }
+.letter blockquote .pull { font-family: var(--display); font-size: var(--step-3); line-height: 1.18; text-wrap: balance; }
+.letter blockquote .pull::before { content: "\201C"; color: var(--wine); }
+.letter blockquote .pull::after { content: "\201D"; color: var(--wine); }
+.letter blockquote .more { font-size: var(--step-1); color: var(--muted); }
+.letter cite { font-style: normal; color: var(--muted); font-size: 0.95rem; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.letter cite b { color: var(--ink); }
+.src { font-family: var(--mono); font-size: 0.7rem; letter-spacing: .1em; text-transform: uppercase; border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px; }
+
+.phones-head { margin-top: clamp(72px, 10vw, 128px); }
+.phones { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(220px, 70%); gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 8px 2px 16px; }
+@media (min-width: 820px) { .phones { grid-auto-flow: row; grid-template-columns: repeat(3, 1fr); overflow: visible; gap: 32px; } }
+.phone { margin: 0; display: grid; gap: 16px; scroll-snap-align: start; min-width: 0; align-content: start; }
+.phone .frame {
+  border-radius: 34px; padding: 10px; background: #0B0A10; border: 1px solid var(--line);
+  box-shadow: 0 30px 60px -30px rgba(20, 10, 30, .55);
+}
+.phone .frame img { border-radius: 26px; width: 100%; height: auto; }
+.phone figcaption { display: grid; gap: 4px; font-size: 0.95rem; color: var(--muted); }
+.phone figcaption b { color: var(--ink); font-size: var(--step-1); font-weight: 600; }
+.privacy-note { margin-top: 28px; font-size: 0.85rem; color: var(--muted); }
+
+/* Scarcity band */
+.band { background: var(--wine); color: var(--wine-ink); }
+.band .wrap { display: grid; gap: 28px; padding-block: clamp(56px, 8vw, 96px); }
+@media (min-width: 900px) { .band .wrap { grid-template-columns: 1.4fr auto; align-items: center; } }
+.band h2 { font-size: var(--step-4); }
+.band h2 em { color: inherit; }
+.band p { opacity: .85; margin-top: 14px; max-width: 56ch; font-size: var(--step-1); }
+.band .btn { background: var(--wine-ink); color: var(--wine); }
+
+/* Packages */
+.plans { display: grid; gap: 20px; }
+@media (min-width: 960px) { .plans { grid-template-columns: repeat(3, 1fr); align-items: stretch; } }
+.plan {
+  display: grid; grid-template-rows: auto auto 1fr auto; gap: 20px; min-width: 0;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px 28px;
+}
+.plan.featured { border-color: var(--wine); box-shadow: 0 0 0 1px var(--wine); position: relative; }
+.plan .flag { position: absolute; top: -12px; left: 28px; background: var(--wine); color: var(--wine-ink); font-family: var(--mono); font-size: 0.7rem; letter-spacing: .12em; text-transform: uppercase; padding: 5px 10px; border-radius: 999px; }
+.plan h3 { font-size: var(--step-3); }
+.plan .tag { color: var(--muted); font-size: 0.95rem; margin-top: 6px; }
+.price { display: flex; align-items: baseline; gap: 8px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+.price b { font-family: var(--body); font-size: 2.4rem; font-weight: 600; letter-spacing: -0.02em; font-variant-numeric: lining-nums tabular-nums; }
+.price span { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+.plan .btn { width: 100%; }
+.standards { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 8px 22px; color: var(--muted); font-size: 0.9rem; }
+.standards span::before { content: "·"; color: var(--wine); margin-right: 8px; font-weight: 700; }
+
+/* Application */
+.apply { background: var(--surface); border-top: 1px solid var(--line); }
+.apply .wrap { display: grid; gap: clamp(32px, 5vw, 72px); }
+@media (min-width: 960px) { .apply .wrap { grid-template-columns: 0.8fr 1.2fr; align-items: start; } }
+.apply-aside { display: grid; gap: 22px; min-width: 0; }
+@media (min-width: 960px) { .apply-aside { position: sticky; top: 100px; } }
+.apply-aside h2 { font-size: var(--step-4); }
+.next-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; counter-reset: n; }
+.next-list li { display: grid; grid-template-columns: 34px 1fr; gap: 12px; counter-increment: n; color: var(--muted); }
+.next-list li::before { content: counter(n); font-family: var(--display); font-style: italic; font-size: 1.5rem; line-height: 1.1; color: var(--wine); }
+.next-list b { color: var(--ink); display: block; }
+
+.form-card { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: clamp(20px, 4vw, 40px); min-width: 0; }
+.progress { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 28px; }
+.progress div { display: grid; gap: 8px; font-family: var(--mono); font-size: 0.7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.progress div::before { content: ""; height: 3px; border-radius: 3px; background: var(--line); }
+.progress div.on { color: var(--ink); }
+.progress div.on::before { background: var(--wine); }
+fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 18px; min-width: 0; }
+legend { font-family: var(--display); font-size: var(--step-2); margin-bottom: 6px; padding: 0; }
+.row { display: grid; gap: 18px; }
+@media (min-width: 600px) { .row.two { grid-template-columns: 1fr 1fr; } }
+.field { display: grid; gap: 7px; min-width: 0; }
+.field > label, .field > .label { font-weight: 600; font-size: 0.92rem; }
+.field .hint { color: var(--muted); font-weight: 400; }
+input[type="text"], input[type="email"], input[type="tel"], input[type="number"], select, textarea {
+  width: 100%; font: inherit; color: var(--ink); background: var(--surface);
+  border: 1px solid var(--line); border-radius: 10px; padding: 13px 14px;
+}
+textarea { min-height: 110px; resize: vertical; }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--wine); box-shadow: 0 0 0 3px color-mix(in srgb, var(--wine) 22%, transparent); }
+input:user-invalid, select:user-invalid { border-color: var(--wine); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { position: relative; }
+.chip input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.chip span { display: inline-block; padding: 9px 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-size: 0.92rem; }
+.chip input:checked + span { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.chip input:focus-visible + span { outline: 2px solid var(--wine); outline-offset: 2px; }
+.form-nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+.form-nav .btn[hidden] { display: none; }
+.form-note { margin-top: 16px; font-size: 0.82rem; color: var(--muted); }
+.success { display: grid; gap: 14px; text-align: left; }
+.success h3 { font-size: var(--step-3); }
+.success p { color: var(--muted); }
+
+/* FAQ */
+.faq .wrap { display: grid; gap: 40px; }
+@media (min-width: 900px) { .faq .wrap { grid-template-columns: 0.8fr 1.2fr; } }
+.faq h2 { font-size: var(--step-4); }
+.qa { border-top: 1px solid var(--line); }
+.qa details { border-bottom: 1px solid var(--line); }
+.qa summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 20px; padding: 22px 0; font-size: var(--step-1); font-weight: 600; }
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary::after { content: "+"; font-family: var(--mono); color: var(--wine); font-size: 1.3rem; line-height: 1; transition: rotate .2s ease; }
+.qa details[open] summary::after { rotate: 45deg; }
+.qa details p { padding-bottom: 22px; color: var(--muted); max-width: 62ch; }
+
+/* Closing + footer */
+.closing { text-align: center; }
+.closing .wrap { display: grid; gap: 24px; justify-items: center; }
+.closing h2 { font-size: clamp(2.6rem, 1.4rem + 5vw, 5rem); max-width: 16ch; }
+.site-footer { border-top: 1px solid var(--line); padding-block: 40px 56px; color: var(--muted); font-size: 0.85rem; }
+.site-footer .wrap { display: grid; gap: 20px; }
+.foot-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px; align-items: center; }
+.foot-links { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+.foot-links a { text-decoration: none; }
+.foot-links a:hover { color: var(--ink); }
+.disclaimer { max-width: 90ch; }
+
+/* Mobile sticky apply */
+.mobile-cta {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  padding: 12px max(16px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid var(--line);
+}
+.mobile-cta .btn { width: 100%; }
+@media (min-width: 900px) { .mobile-cta { display: none; } }
+@media (max-width: 899px) { .site-footer { padding-bottom: 120px; } }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Katie's Dating Concierge, home">
+      <b>Katie's</b>
+      <small>Dating Concierge</small>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#how">How it works</a>
+      <a href="#results">Results</a>
+      <a href="#packages">Packages</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-primary" href="#application">Apply</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">Private application · Limited clients each month</p>
+        <h1>We book the dates. <em>You just show&nbsp;up.</em></h1>
+        <p class="lede">Your chief of staff for dating. We build your profile, find your matches, handle every conversation and set up the plans. You review, approve, and walk in the door.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#application">Apply now <span class="arrow">→</span></a>
+          <a class="btn btn-ghost" href="#start">Watch the introduction</a>
+        </div>
+        <div class="pill-row" aria-label="What's included">
+          <span>No swiping</span>
+          <span>No messaging</span>
+          <span>You approve every match</span>
+          <span>100% confidential</span>
+        </div>
+      </div>
+
+      <div class="hero-media">
+        <!-- VIDEO PLACEHOLDER: Main introduction (vertical 4:5) -->
+        <div class="video r-4x5" role="img" aria-label="Video placeholder: Meet Katie, introduction video">
+          <span class="v-tag">Introduction</span>
+          <span class="play" aria-hidden="true"></span>
+          <div class="v-meta"><span class="v-title">Meet Katie: why I started this</span><span class="v-len">1:30</span></div>
+        </div>
+        <div class="update-card" aria-label="Example of an update from your concierge">
+          <div class="uc-top"><span>Update from Katie</span><b>Confirmed</b></div>
+          <strong>Your Thursday date is set.</strong>
+          <div class="uc-row"><span>When</span><span>Thu · 8:00 PM</span></div>
+          <div class="uc-row"><span>Where</span><span>Wine bar, table booked</span></div>
+          <div class="uc-row"><span>Her note</span><span>"Can't wait, see you there!"</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- START HERE: intro videos -->
+  <section class="section intro" id="start">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Start here</p>
+        <h2>Three short videos <em>before you apply</em></h2>
+        <p class="lede">Watch these first. They cover who we work with, what we take off your plate, and how we keep everything private.</p>
+      </div>
+      <div class="intro-grid">
+        <figure>
+          <!-- VIDEO PLACEHOLDER: Intro 1 -->
+          <div class="video r-9x16" role="img" aria-label="Video placeholder: Who we work with">
+            <span class="v-tag">Intro 1</span>
+            <span class="play" aria-hidden="true"></span>
+            <div class="v-meta"><span class="v-title">Who we work with</span><span class="v-len">0:60</span></div>
+          </div>
+          <figcaption><b>Who we work with</b><span>Busy, successful men who want real dates, not another app habit.</span></figcaption>
+        </figure>
+        <figure>
+          <!-- VIDEO PLACEHOLDER: Intro 2 -->
+          <div class="video r-9x16" role="img" aria-label="Video placeholder: What we handle and what you do">
+            <span class="v-tag">Intro 2</span>
+            <span class="play" aria-hidden="true"></span>
+            <div class="v-meta"><span class="v-title">What we handle, what you do</span><span class="v-len">0:60</span></div>
+          </div>
+          <figcaption><b>What we handle, what you do</b><span>A walk through a real week: matches, messages, plans, updates.</span></figcaption>
+        </figure>
+        <figure>
+          <!-- VIDEO PLACEHOLDER: Intro 3 -->
+          <div class="video r-9x16" role="img" aria-label="Video placeholder: Privacy and discretion">
+            <span class="v-tag">Intro 3</span>
+            <span class="play" aria-hidden="true"></span>
+            <div class="v-meta"><span class="v-title">Privacy &amp; discretion</span><span class="v-len">0:45</span></div>
+          </div>
+          <figcaption><b>Privacy &amp; discretion</b><span>How your profile, photos and conversations stay protected.</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- THESIS -->
+  <section class="section thesis">
+    <div class="wrap">
+      <div class="section-head" style="margin-bottom:0">
+        <p class="eyebrow">Your time is your most valuable asset</p>
+        <h2>Stop spending your evenings <em>swiping.</em></h2>
+        <p class="lede">Modern dating takes hours most successful men don't have. We take on the work behind the scenes so your dating life fits around your real one.</p>
+      </div>
+      <div class="thesis-list" aria-label="What we take off your plate">
+        <div><s>Hours of swiping</s><span>We handle it</span></div>
+        <div><s>Chats that fizzle out</s><span>We handle it</span></div>
+        <div><s>Back-and-forth on times and places</s><span>We handle it</span></div>
+        <div><s>Guessing what to write in your bio</s><span>We handle it</span></div>
+        <div><b>Showing up for the date</b><span>That's you</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section" id="how" style="padding-top:0">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">How it works</p>
+        <h2>Four steps. <em>One of them is yours.</em></h2>
+        <p class="lede">Each step has a short video from Katie explaining exactly what happens.</p>
+      </div>
+
+      <div class="steps">
+        <article class="step">
+          <div class="step-media">
+            <!-- VIDEO PLACEHOLDER: Step 1 -->
+            <div class="video r-16x9" role="img" aria-label="Video placeholder: Step 1, Discovery and strategy">
+              <span class="v-tag">Step 01</span>
+              <span class="play" aria-hidden="true"></span>
+              <div class="v-meta"><span class="v-title">Discovery &amp; strategy</span><span class="v-len">1:15</span></div>
+            </div>
+          </div>
+          <div class="step-body">
+            <div class="step-num"><i>01</i><span>Discovery &amp; strategy</span></div>
+            <h3>We get to know you</h3>
+            <p>You complete a detailed survey about your lifestyle, values and what you want in a partner. Then we go deeper on a private strategy call.</p>
+            <ul class="checks">
+              <li>In-depth survey about you and who you're looking for</li>
+              <li>Private strategy call to align on your goals</li>
+              <li>Market insights specific to your city</li>
+              <li>A dating strategy built around your schedule</li>
+            </ul>
+            <p class="your-part"><b>Your part</b> One survey and one call.</p>
+          </div>
+        </article>
+
+        <article class="step">
+          <div class="step-media">
+            <!-- VIDEO PLACEHOLDER: Step 2 -->
+            <div class="video r-16x9" role="img" aria-label="Video placeholder: Step 2, Profile creation">
+              <span class="v-tag">Step 02</span>
+              <span class="play" aria-hidden="true"></span>
+              <div class="v-meta"><span class="v-title">Building your profile</span><span class="v-len">1:20</span></div>
+            </div>
+          </div>
+          <div class="step-body">
+            <div class="step-num"><i>02</i><span>Profile creation</span></div>
+            <h3>We build a standout profile</h3>
+            <p>We write and design a profile that shows the best, true version of you and attracts the kind of woman you want to meet.</p>
+            <ul class="checks">
+              <li>Select and improve your best photos</li>
+              <li>Write a bio and prompt answers that stand out</li>
+              <li>Set up filters and preferences on each platform</li>
+              <li>Nothing goes live until you approve it</li>
+            </ul>
+            <p class="your-part"><b>Your part</b> Send photos and approve the final profile.</p>
+          </div>
+        </article>
+
+        <article class="step">
+          <div class="step-media">
+            <!-- VIDEO PLACEHOLDER: Step 3 -->
+            <div class="video r-16x9" role="img" aria-label="Video placeholder: Step 3, Matching and conversations">
+              <span class="v-tag">Step 03</span>
+              <span class="play" aria-hidden="true"></span>
+              <div class="v-meta"><span class="v-title">Matches &amp; conversations</span><span class="v-len">1:30</span></div>
+            </div>
+          </div>
+          <div class="step-body">
+            <div class="step-num"><i>03</i><span>Matching &amp; messaging</span></div>
+            <h3>We find matches and keep things moving</h3>
+            <p>We do the swiping, screen every profile against your criteria and keep conversations engaging until there's a plan on the table.</p>
+            <ul class="checks">
+              <li>Hand-picked matches screened for compatibility</li>
+              <li>You see the shortlist and choose who to meet</li>
+              <li>Conversations kept natural and moving toward a date</li>
+              <li>Weekly updates on every active match</li>
+            </ul>
+            <p class="your-part"><b>Your part</b> Pick who you'd like to meet.</p>
+          </div>
+        </article>
+
+        <article class="step">
+          <div class="step-media">
+            <!-- VIDEO PLACEHOLDER: Step 4 -->
+            <div class="video r-16x9" role="img" aria-label="Video placeholder: Step 4, Date coordination">
+              <span class="v-tag">Step 04</span>
+              <span class="play" aria-hidden="true"></span>
+              <div class="v-meta"><span class="v-title">The date is booked</span><span class="v-len">1:00</span></div>
+            </div>
+          </div>
+          <div class="step-body">
+            <div class="step-num"><i>04</i><span>Date coordination</span></div>
+            <h3>You show up and enjoy the date</h3>
+            <p>We agree the time and place, confirm with her, and send you the details. All that's left is to be yourself.</p>
+            <ul class="checks">
+              <li>Date ideas suited to you and her</li>
+              <li>Time, venue and reservation sorted</li>
+              <li>Confirmation sent to your phone</li>
+              <li>Feedback after each date sharpens the next match</li>
+            </ul>
+            <p class="your-part"><b>Your part</b> Show up.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF -->
+  <section class="section proof" id="results">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Client results</p>
+        <h2>In their <em>own words</em></h2>
+        <p class="lede">Unedited messages from current clients. Last names hidden for privacy.</p>
+      </div>
+
+      <div class="letters">
+        <div class="letter">
+          <div class="shot">
+            <img src="assets/proof/andrew-email.webp" width="1189" height="1100" loading="lazy"
+                 alt="Email from Andrew: I've never been great at messaging on the apps. Since Katie started handling the messages, I'm getting a lot more dates. I'm happy I don't have to manage any of it now. I just show up for the dates.">
+          </div>
+          <blockquote>
+            <p class="pull">I'd overthink what to say and let conversations go nowhere. Since Katie started handling the messages, I'm getting a lot more dates.</p>
+            <cite><b>Andrew</b> <span class="src">Email</span></cite>
+            <p class="more">"I'm happy I don't have to manage any of it now. I just show up for the dates."</p>
+          </blockquote>
+        </div>
+
+        <div class="letter flip">
+          <div class="shot tall">
+            <img src="assets/proof/whatsapp-review.webp" width="901" height="1600" loading="lazy"
+                 alt="WhatsApp message from a client: The biggest difference has been how much time I have back. I'm getting more matches and actually going on dates. It still feels like my dating life, just without all the work that used to come with it.">
+          </div>
+          <blockquote>
+            <p class="pull">It still feels like my dating life, just without all the work that used to come with it.</p>
+            <cite><b>Current client</b> <span class="src">WhatsApp</span></cite>
+            <p class="more">"The best part is just showing up for the date. I'm meeting people I want to meet, and the apps aren't taking over my day anymore."</p>
+          </blockquote>
+        </div>
+      </div>
+
+      <div class="section-head phones-head">
+        <p class="eyebrow">Inside a client's phone</p>
+        <h2>This is what <em>"handled"</em> looks like</h2>
+        <p class="lede">Screenshots from client accounts we manage. Every "Your Turn" is a conversation heading toward a date.</p>
+      </div>
+      <div class="phones">
+        <figure class="phone">
+          <div class="frame"><img src="assets/proof/tinder-inbox.webp" width="917" height="1716" loading="lazy" alt="Tinder inbox with five conversations, each waiting on a reply: 'Okay, when are you taking me for coffee?', 'So are we actually making plans?'"></div>
+          <figcaption><b>"So are we actually making plans?"</b>Five matches asking for the date. We take it from here.</figcaption>
+        </figure>
+        <figure class="phone">
+          <div class="frame"><img src="assets/proof/chat-inbox.webp" width="841" height="1870" loading="lazy" alt="Dating app chat list showing 286 likes and many conversations marked Your Turn, including 'Hi there, that sounds great but how late tho?' and 'Im very open to that idea'"></div>
+          <figcaption><b>286 likes, a full inbox</b>Every thread kept warm and steered toward a plan.</figcaption>
+        </figure>
+        <figure class="phone">
+          <div class="frame"><img src="assets/proof/match-notifications.webp" width="899" height="2000" loading="lazy" alt="Phone notifications from Tinder overnight: new matches and new messages from several women"></div>
+          <figcaption><b>Overnight, while he slept</b>New matches and replies, sorted for him by morning.</figcaption>
+        </figure>
+      </div>
+      <p class="privacy-note">Names and photos are blurred to protect clients and their matches. Results vary from client to client.</p>
+    </div>
+  </section>
+
+  <!-- SCARCITY BAND -->
+  <section class="band" aria-label="Limited availability">
+    <div class="wrap">
+      <div>
+        <h2>We only take on a <em>few new clients</em> each month.</h2>
+        <p>Every client gets real attention from our team, so we keep the roster small. Apply now to be considered for this month's spots.</p>
+      </div>
+      <a class="btn" href="#application">Apply for this month <span class="arrow">→</span></a>
+    </div>
+  </section>
+
+  <!-- PACKAGES -->
+  <section class="section" id="packages">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Packages</p>
+        <h2>Choose your <em>level of support</em></h2>
+        <p class="lede">More platforms, more strategy, more personal attention. Every package runs in 30-day cycles.</p>
+      </div>
+      <div class="plans">
+        <article class="plan">
+          <div><h3>Essential</h3><p class="tag">A professional profile and full match support on one platform.</p></div>
+          <div class="price"><b>$3,000</b><span>per 30 days</span></div>
+          <ul class="checks">
+            <li>1 dating platform</li>
+            <li>Complete profile setup &amp; optimization</li>
+            <li>Photo review &amp; improvement</li>
+            <li>Match recommendations</li>
+            <li>Messaging &amp; date invitations</li>
+            <li>Weekly progress reports</li>
+          </ul>
+          <a class="btn btn-ghost" href="#application" data-plan="Essential">Apply for Essential</a>
+        </article>
+        <article class="plan featured">
+          <span class="flag">Most popular</span>
+          <div><h3>Executive</h3><p class="tag">More platforms, advanced strategy and priority support.</p></div>
+          <div class="price"><b>$5,000</b><span>per 30 days</span></div>
+          <ul class="checks">
+            <li>Up to 3 dating platforms</li>
+            <li>Platform-specific profile strategy</li>
+            <li>A/B testing &amp; advanced optimization</li>
+            <li>Priority conversation &amp; date support</li>
+            <li>Up to 4 private consultations</li>
+            <li>Travel dating preparation</li>
+            <li>Detailed weekly reports</li>
+          </ul>
+          <a class="btn btn-primary" href="#application" data-plan="Executive">Apply for Executive</a>
+        </article>
+        <article class="plan">
+          <div><h3>Private Elite</h3><p class="tag">A dedicated lead concierge and personal brand management.</p></div>
+          <div class="price"><b>$8,500</b><span>per 30 days</span></div>
+          <ul class="checks">
+            <li>Everything in Executive</li>
+            <li>Dedicated lead concierge</li>
+            <li>Instagram &amp; personal brand management</li>
+            <li>Content planning &amp; photo coordination</li>
+            <li>Up to 8 private consultations</li>
+            <li>Advanced travel &amp; date coordination</li>
+            <li>Highest priority support</li>
+          </ul>
+          <a class="btn btn-ghost" href="#application" data-plan="Private Elite">Apply for Private Elite</a>
+        </article>
+      </div>
+      <div class="standards" aria-label="Included with every package">
+        <span>Secure client channel</span><span>You approve everything</span><span>Truthful, consent-based profiles</span><span>Confidential by default</span><span>Platform subscriptions paid separately</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPLICATION -->
+  <section class="section apply" id="application">
+    <div class="wrap">
+      <aside class="apply-aside">
+        <p class="eyebrow">Application</p>
+        <h2>Apply to <em>work with Katie</em></h2>
+        <p class="lede">Takes about three minutes. Everything you share is confidential.</p>
+        <ol class="next-list">
+          <li><span><b>We review your application</b>Katie reads every one personally.</span></li>
+          <li><span><b>Private strategy call</b>If it's a fit, we book a call to plan your approach.</span></li>
+          <li><span><b>Your profile goes live</b>Once you approve it, we start working your matches.</span></li>
+        </ol>
+      </aside>
+
+      <div class="form-card">
+        <div class="progress" aria-hidden="true">
+          <div class="on">About you</div><div>What you want</div><div>Contact</div>
+        </div>
+
+        <form id="apply-form" novalidate>
+          <fieldset data-step="0">
+            <legend>About you</legend>
+            <div class="row two">
+              <div class="field"><label for="f-name">First name</label><input id="f-name" name="name" type="text" autocomplete="given-name" required></div>
+              <div class="field"><label for="f-age">Age</label><input id="f-age" name="age" type="number" min="21" max="99" inputmode="numeric" required></div>
+            </div>
+            <div class="row two">
+              <div class="field"><label for="f-city">City</label><input id="f-city" name="city" type="text" autocomplete="address-level2" required></div>
+              <div class="field"><label for="f-job">What do you do? <span class="hint">(optional)</span></label><input id="f-job" name="occupation" type="text" autocomplete="organization-title"></div>
+            </div>
+            <div class="field">
+              <span class="label" id="l-apps">Which apps are you on now?</span>
+              <div class="chips" role="group" aria-labelledby="l-apps">
+                <label class="chip"><input type="checkbox" id="app-tinder" name="apps" value="Tinder"><span>Tinder</span></label>
+                <label class="chip"><input type="checkbox" id="app-hinge" name="apps" value="Hinge"><span>Hinge</span></label>
+                <label class="chip"><input type="checkbox" id="app-bumble" name="apps" value="Bumble"><span>Bumble</span></label>
+                <label class="chip"><input type="checkbox" id="app-raya" name="apps" value="Raya"><span>Raya</span></label>
+                <label class="chip"><input type="checkbox" id="app-other" name="apps" value="Other"><span>Other</span></label>
+                <label class="chip"><input type="checkbox" id="app-none" name="apps" value="None yet"><span>None yet</span></label>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset data-step="1" hidden>
+            <legend>What you want</legend>
+            <div class="field">
+              <label for="f-goal">What are you looking for?</label>
+              <select id="f-goal" name="goal" required>
+                <option value="">Choose one</option>
+                <option>A long-term relationship</option>
+                <option>Dating with intent, open to where it goes</option>
+                <option>More quality dates, no rush</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f-type">Describe who you'd like to meet <span class="hint">(age range, personality, lifestyle)</span></label>
+              <textarea id="f-type" name="ideal" required></textarea>
+            </div>
+            <div class="field">
+              <label for="f-hard">What's been the hardest part of dating apps for you?</label>
+              <textarea id="f-hard" name="frustration"></textarea>
+            </div>
+          </fieldset>
+
+          <fieldset data-step="2" hidden>
+            <legend>How do we reach you?</legend>
+            <div class="row two">
+              <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+              <div class="field"><label for="f-phone">Phone or WhatsApp</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" required></div>
+            </div>
+            <div class="field">
+              <span class="label" id="l-plan">Which package interests you?</span>
+              <div class="chips" role="radiogroup" aria-labelledby="l-plan">
+                <label class="chip"><input type="radio" id="plan-essential" name="plan" value="Essential"><span>Essential</span></label>
+                <label class="chip"><input type="radio" id="plan-executive" name="plan" value="Executive"><span>Executive</span></label>
+                <label class="chip"><input type="radio" id="plan-elite" name="plan" value="Private Elite"><span>Private Elite</span></label>
+                <label class="chip"><input type="radio" id="plan-unsure" name="plan" value="Not sure yet" checked><span>Not sure yet</span></label>
+              </div>
+            </div>
+            <div class="field">
+              <label for="f-when">When would you like to start?</label>
+              <select id="f-when" name="start" required>
+                <option value="">Choose one</option>
+                <option>As soon as possible</option>
+                <option>Within the next month</option>
+                <option>In 1–3 months</option>
+              </select>
+            </div>
+          </fieldset>
+
+          <div class="form-nav">
+            <button type="button" class="btn btn-ghost" id="btn-back" hidden>← Back</button>
+            <button type="button" class="btn btn-primary" id="btn-next">Continue <span class="arrow">→</span></button>
+            <button type="submit" class="btn btn-primary" id="btn-submit" hidden>Submit application</button>
+          </div>
+          <p class="form-note">By applying you agree to be contacted about your application. We never share your details.</p>
+        </form>
+
+        <div class="success" id="apply-success" hidden>
+          <p class="eyebrow">Application received</p>
+          <h3>Thank you, <span id="success-name">we'll be in touch</span>.</h3>
+          <p>Katie will review your application and reach out by email to book your private strategy call. In the meantime, watch the three intro videos if you haven't yet.</p>
+          <a class="btn btn-ghost" href="#start">Watch the intro videos</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section faq" id="faq">
+    <div class="wrap">
+      <div class="section-head" style="margin-bottom:0">
+        <p class="eyebrow">Questions</p>
+        <h2>Before <em>you apply</em></h2>
+      </div>
+      <div class="qa">
+        <details>
+          <summary>Do I still get a say in who I meet?</summary>
+          <p>Always. We send you the shortlist and you choose who you'd like to meet. Nothing is booked without your approval, and your profile doesn't go live until you've signed off on it.</p>
+        </details>
+        <details>
+          <summary>Which dating apps do you work with?</summary>
+          <p>We work on the major dating apps. Essential covers one platform, Executive covers up to three, and Private Elite adds Instagram and personal brand management. Platform subscriptions are paid separately by you.</p>
+        </details>
+        <details>
+          <summary>How do you keep this confidential?</summary>
+          <p>Privacy is the default. We communicate through a secure client channel, never share your details without approval, and every profile we build is truthful and represents you as you really are.</p>
+        </details>
+        <details>
+          <summary>How much of my time does this take?</summary>
+          <p>A survey and one strategy call at the start, then a few minutes a week to review your matches and approve plans. The rest of your time goes to the dates themselves.</p>
+        </details>
+        <details>
+          <summary>How will I know what's happening?</summary>
+          <p>You get regular updates from Katie with your new matches, active conversations and upcoming dates, plus a weekly progress report.</p>
+        </details>
+        <details>
+          <summary>I travel a lot. Can you help with that?</summary>
+          <p>Yes. Executive includes travel dating preparation, and Private Elite adds advanced travel and date coordination so you can meet people wherever you are that week.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="section closing">
+    <div class="wrap">
+      <p class="eyebrow">Private · Discreet · By application only</p>
+      <h2>Your next date, <em>already planned.</em></h2>
+      <a class="btn btn-primary" href="#application">Apply now <span class="arrow">→</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-top">
+      <a class="brand" href="#top"><b>Katie's</b><small>Dating Concierge</small></a>
+      <nav class="foot-links" aria-label="Footer">
+        <a href="#how">How it works</a><a href="#results">Results</a><a href="#packages">Packages</a><a href="#faq">FAQ</a><a href="#">Terms</a><a href="#">Privacy</a>
+      </nav>
+    </div>
+    <p class="disclaimer">Katie's Dating Concierge is an independent service and is not affiliated with or endorsed by Tinder, Hinge, Bumble, Raya, Meta or any dating platform. Testimonials reflect individual experiences; results vary and we do not guarantee matches, dates or relationships. Service limited to lawful adult dating.</p>
+    <p>© 2026 Katie's Dating Concierge</p>
+  </div>
+</footer>
+
+<div class="mobile-cta"><a class="btn btn-primary" href="#application">Apply now <span class="arrow">→</span></a></div>
+
+<script>
+(function () {
+  var form = document.getElementById('apply-form');
+  var steps = form.querySelectorAll('fieldset[data-step]');
+  var bars = document.querySelectorAll('.progress div');
+  var back = document.getElementById('btn-back');
+  var next = document.getElementById('btn-next');
+  var submit = document.getElementById('btn-submit');
+  var current = 0;
+
+  function show(i) {
+    current = i;
+    steps.forEach(function (s, n) { s.hidden = n !== i; });
+    bars.forEach(function (b, n) { b.classList.toggle('on', n <= i); });
+    back.hidden = i === 0;
+    next.hidden = i === steps.length - 1;
+    submit.hidden = i !== steps.length - 1;
+  }
+  function valid(i) {
+    var fields = steps[i].querySelectorAll('input, select, textarea');
+    for (var k = 0; k < fields.length; k++) {
+      if (!fields[k].checkValidity()) { fields[k].reportValidity(); fields[k].focus(); return false; }
+    }
+    return true;
+  }
+  next.addEventListener('click', function () { if (valid(current)) { show(current + 1); steps[current].querySelector('input, select, textarea').focus(); } });
+  back.addEventListener('click', function () { show(current - 1); });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!valid(current)) return;
+    // TODO: send new FormData(form) to your CRM / email endpoint here.
+    var name = form.elements.name.value.trim();
+    document.getElementById('success-name').textContent = name || "we'll be in touch";
+    form.hidden = true;
+    document.querySelector('.progress').hidden = true;
+    document.getElementById('apply-success').hidden = false;
+  });
+
+  // Package buttons preselect the plan in the form
+  document.querySelectorAll('[data-plan]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var plan = btn.getAttribute('data-plan');
+      form.querySelectorAll('input[name="plan"]').forEach(function (r) { r.checked = r.value === plan; });
+    });
+  });
+})();
+</script>
+</body>
+</html>

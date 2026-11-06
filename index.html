@@ -37,19 +37,8 @@
   --step-4: clamp(2.4rem, 1.4rem + 4.4vw, 4.25rem);
 
   --radius: 14px;
+  color-scheme: light;
   --wrap: 1180px;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #100E17; --surface: #1A1724; --ink: #EEEAF3; --muted: #A6A0B5; --line: #2D2939;
-    --wine: #E27D9F; --wine-ink: #1C0C14; --blush: #2A1B26; --stage: #08070D; --stage-2: #2A1424; --stage-fg: #F3EEF6;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --paper: #100E17; --surface: #1A1724; --ink: #EEEAF3; --muted: #A6A0B5; --line: #2D2939;
-  --wine: #E27D9F; --wine-ink: #1C0C14; --blush: #2A1B26; --stage: #08070D; --stage-2: #2A1424; --stage-fg: #F3EEF6;
-  color-scheme: dark;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -377,14 +366,13 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
       <div class="hero-copy">
         <p class="eyebrow">Private application · Limited clients each month</p>
         <h1>We book the dates. <em>You just show&nbsp;up.</em></h1>
-        <p class="lede">Your chief of staff for dating. We build your profile, find your matches, handle every conversation and set up the plans. You review, approve, and walk in the door.</p>
+        <p class="lede">We run your dating apps for you, from first match to booked date.</p>
         <div class="cta-row">
           <a class="btn btn-primary" href="#application">Apply now <span class="arrow">→</span></a>
           <a class="btn btn-ghost" href="#start">Watch the introduction</a>
         </div>
         <div class="pill-row" aria-label="What's included">
           <span>No swiping</span>
-          <span>No messaging</span>
           <span>You approve every match</span>
           <span>100% confidential</span>
         </div>
@@ -414,7 +402,7 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
       <div class="section-head">
         <p class="eyebrow">Start here</p>
         <h2>Three short videos <em>before you apply</em></h2>
-        <p class="lede">Watch these first. They cover who we work with, what we take off your plate, and how we keep everything private.</p>
+        
       </div>
       <div class="intro-grid">
         <figure>
@@ -424,7 +412,7 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
             <span class="play" aria-hidden="true"></span>
             <div class="v-meta"><span class="v-title">Who we work with</span><span class="v-len">0:60</span></div>
           </div>
-          <figcaption><b>Who we work with</b><span>Busy, successful men who want real dates, not another app habit.</span></figcaption>
+          <figcaption><b>Who we work with</b></figcaption>
         </figure>
         <figure>
           <!-- VIDEO PLACEHOLDER: Intro 2 -->
@@ -433,7 +421,7 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
             <span class="play" aria-hidden="true"></span>
             <div class="v-meta"><span class="v-title">What we handle, what you do</span><span class="v-len">0:60</span></div>
           </div>
-          <figcaption><b>What we handle, what you do</b><span>A walk through a real week: matches, messages, plans, updates.</span></figcaption>
+          <figcaption><b>What we handle, what you do</b></figcaption>
         </figure>
         <figure>
           <!-- VIDEO PLACEHOLDER: Intro 3 -->
@@ -442,7 +430,7 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
             <span class="play" aria-hidden="true"></span>
             <div class="v-meta"><span class="v-title">Privacy &amp; discretion</span><span class="v-len">0:45</span></div>
           </div>
-          <figcaption><b>Privacy &amp; discretion</b><span>How your profile, photos and conversations stay protected.</span></figcaption>
+          <figcaption><b>Privacy &amp; discretion</b></figcaption>
         </figure>
       </div>
     </div>
@@ -454,14 +442,13 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
       <div class="section-head" style="margin-bottom:0">
         <p class="eyebrow">Your time is your most valuable asset</p>
         <h2>Stop spending your evenings <em>swiping.</em></h2>
-        <p class="lede">Modern dating takes hours most successful men don't have. We take on the work behind the scenes so your dating life fits around your real one.</p>
+        
       </div>
       <div class="thesis-list" aria-label="What we take off your plate">
         <div><s>Hours of swiping</s><span>We handle it</span></div>
         <div><s>Chats that fizzle out</s><span>We handle it</span></div>
         <div><s>Back-and-forth on times and places</s><span>We handle it</span></div>
-        <div><s>Guessing what to write in your bio</s><span>We handle it</span></div>
-        <div><b>Showing up for the date</b><span>That's you</span></div>
+                <div><b>Showing up for the date</b><span>That's you</span></div>
       </div>
     </div>
   </section>
@@ -472,7 +459,7 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
       <div class="section-head">
         <p class="eyebrow">How it works</p>
         <h2>Four steps. <em>One of them is yours.</em></h2>
-        <p class="lede">Each step has a short video from Katie explaining exactly what happens.</p>
+        
       </div>
 
       <div class="steps">
@@ -488,12 +475,10 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
           <div class="step-body">
             <div class="step-num"><i>01</i><span>Discovery &amp; strategy</span></div>
             <h3>We get to know you</h3>
-            <p>You complete a detailed survey about your lifestyle, values and what you want in a partner. Then we go deeper on a private strategy call.</p>
             <ul class="checks">
               <li>In-depth survey about you and who you're looking for</li>
               <li>Private strategy call to align on your goals</li>
               <li>Market insights specific to your city</li>
-              <li>A dating strategy built around your schedule</li>
             </ul>
             <p class="your-part"><b>Your part</b> One survey and one call.</p>
           </div>
@@ -511,12 +496,10 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
           <div class="step-body">
             <div class="step-num"><i>02</i><span>Profile creation</span></div>
             <h3>We build a standout profile</h3>
-            <p>We write and design a profile that shows the best, true version of you and attracts the kind of woman you want to meet.</p>
             <ul class="checks">
               <li>Select and improve your best photos</li>
               <li>Write a bio and prompt answers that stand out</li>
               <li>Set up filters and preferences on each platform</li>
-              <li>Nothing goes live until you approve it</li>
             </ul>
             <p class="your-part"><b>Your part</b> Send photos and approve the final profile.</p>
           </div>
@@ -534,12 +517,10 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
           <div class="step-body">
             <div class="step-num"><i>03</i><span>Matching &amp; messaging</span></div>
             <h3>We find matches and keep things moving</h3>
-            <p>We do the swiping, screen every profile against your criteria and keep conversations engaging until there's a plan on the table.</p>
             <ul class="checks">
               <li>Hand-picked matches screened for compatibility</li>
               <li>You see the shortlist and choose who to meet</li>
               <li>Conversations kept natural and moving toward a date</li>
-              <li>Weekly updates on every active match</li>
             </ul>
             <p class="your-part"><b>Your part</b> Pick who you'd like to meet.</p>
           </div>
@@ -557,12 +538,10 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
           <div class="step-body">
             <div class="step-num"><i>04</i><span>Date coordination</span></div>
             <h3>You show up and enjoy the date</h3>
-            <p>We agree the time and place, confirm with her, and send you the details. All that's left is to be yourself.</p>
             <ul class="checks">
               <li>Date ideas suited to you and her</li>
               <li>Time, venue and reservation sorted</li>
               <li>Confirmation sent to your phone</li>
-              <li>Feedback after each date sharpens the next match</li>
             </ul>
             <p class="your-part"><b>Your part</b> Show up.</p>
           </div>
@@ -577,7 +556,7 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
       <div class="section-head">
         <p class="eyebrow">Client results</p>
         <h2>In their <em>own words</em></h2>
-        <p class="lede">Unedited messages from current clients. Last names hidden for privacy.</p>
+        <p class="lede">Real messages from current clients.</p>
       </div>
 
       <div class="letters">
@@ -589,7 +568,6 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
           <blockquote>
             <p class="pull">I'd overthink what to say and let conversations go nowhere. Since Katie started handling the messages, I'm getting a lot more dates.</p>
             <cite><b>Andrew</b> <span class="src">Email</span></cite>
-            <p class="more">"I'm happy I don't have to manage any of it now. I just show up for the dates."</p>
           </blockquote>
         </div>
 
@@ -601,7 +579,6 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
           <blockquote>
             <p class="pull">It still feels like my dating life, just without all the work that used to come with it.</p>
             <cite><b>Current client</b> <span class="src">WhatsApp</span></cite>
-            <p class="more">"The best part is just showing up for the date. I'm meeting people I want to meet, and the apps aren't taking over my day anymore."</p>
           </blockquote>
         </div>
       </div>
@@ -609,7 +586,7 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
       <div class="section-head phones-head">
         <p class="eyebrow">Inside a client's phone</p>
         <h2>This is what <em>"handled"</em> looks like</h2>
-        <p class="lede">Screenshots from client accounts we manage. Every "Your Turn" is a conversation heading toward a date.</p>
+        <p class="lede">Real client accounts we manage.</p>
       </div>
       <div class="phones">
         <figure class="phone">
@@ -634,7 +611,7 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
     <div class="wrap">
       <div>
         <h2>We only take on a <em>few new clients</em> each month.</h2>
-        <p>Every client gets real attention from our team, so we keep the roster small. Apply now to be considered for this month's spots.</p>
+        <p>Apply now for this month's spots.</p>
       </div>
       <a class="btn" href="#application">Apply for this month <span class="arrow">→</span></a>
     </div>
@@ -646,7 +623,7 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
       <div class="section-head">
         <p class="eyebrow">Packages</p>
         <h2>Choose your <em>level of support</em></h2>
-        <p class="lede">More platforms, more strategy, more personal attention. Every package runs in 30-day cycles.</p>
+        <p class="lede">Every package runs in 30-day cycles.</p>
       </div>
       <div class="plans">
         <article class="plan">
@@ -704,7 +681,7 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
       <aside class="apply-aside">
         <p class="eyebrow">Application</p>
         <h2>Apply to <em>work with Katie</em></h2>
-        <p class="lede">Takes about three minutes. Everything you share is confidential.</p>
+        <p class="lede">Takes 3 minutes. Fully confidential.</p>
         <ol class="next-list">
           <li><span><b>We review your application</b>Katie reads every one personally.</span></li>
           <li><span><b>Private strategy call</b>If it's a fit, we book a call to plan your approach.</span></li>

@@ -18,7 +18,7 @@
   --ink: #1A1830;
   --muted: #5F5B70;
   --line: #E1DDE6;
-  --wine: #8A2246;
+  --wine: #A8325C;
   --wine-ink: #FFFFFF;
   --blush: #F2E4EA;
   --stage: #1A1830;
@@ -42,6 +42,12 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
+/* Dark sections: same tokens, redefined locally */
+.dark {
+  --paper: #121017; --surface: #1C1923; --ink: #F3EFF6; --muted: #ADA7BA; --line: #2F2B39;
+  --wine: #EC8FAE; --wine-ink: #1A0D13; --blush: #2B1D27;
+  background: var(--paper); color: var(--ink); color-scheme: dark;
+}
 [hidden] { display: none !important; }
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; animation: none !important; } }
@@ -234,13 +240,12 @@ p { margin: 0; }
 .privacy-note { margin-top: 28px; font-size: 0.85rem; color: var(--muted); }
 
 /* Scarcity band */
-.band { background: var(--wine); color: var(--wine-ink); }
+.band { background: var(--paper); color: var(--ink); }
 .band .wrap { display: grid; gap: 28px; padding-block: clamp(56px, 8vw, 96px); }
 @media (min-width: 900px) { .band .wrap { grid-template-columns: 1.4fr auto; align-items: center; } }
 .band h2 { font-size: var(--step-4); }
-.band h2 em { color: inherit; }
 .band p { opacity: .85; margin-top: 14px; max-width: 56ch; font-size: var(--step-1); }
-.band .btn { background: var(--wine-ink); color: var(--wine); }
+.band .btn { background: var(--wine); color: var(--wine-ink); }
 
 /* Packages */
 .plans { display: grid; gap: 20px; }
@@ -438,7 +443,7 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
   </section>
 
   <!-- THESIS -->
-  <section class="section thesis">
+  <section class="section thesis dark">
     <div class="wrap">
       <div class="section-head" style="margin-bottom:0">
         <p class="eyebrow">Your time is your most valuable asset</p>
@@ -455,7 +460,7 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
   </section>
 
   <!-- PROCESS -->
-  <section class="section" id="how" style="padding-top:0">
+  <section class="section" id="how">
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">How it works</p>
@@ -608,7 +613,7 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
   </section>
 
   <!-- SCARCITY BAND -->
-  <section class="band" aria-label="Limited availability">
+  <section class="band dark" aria-label="Limited availability">
     <div class="wrap">
       <div>
         <h2>We only take on a <em>few new clients</em> each month.</h2>
@@ -821,7 +826,7 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
   </section>
 
   <!-- CLOSING -->
-  <section class="section closing">
+  <section class="section closing dark">
     <div class="wrap">
       <p class="eyebrow">Private · Discreet · By application only</p>
       <h2>Your next date, <em>already planned.</em></h2>

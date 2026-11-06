@@ -166,7 +166,7 @@ p { margin: 0; }
 .update-card .uc-row span:last-child { color: var(--ink); }
 
 /* Start here (intro videos) */
-.intro { background: var(--surface); border-block: 1px solid var(--line); }
+.intro { background: var(--paper); }
 .intro-grid { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(220px, 72%); gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; }
 .intro-grid > figure { scroll-snap-align: start; margin: 0; display: grid; gap: 14px; min-width: 0; }
 @media (min-width: 760px) { .intro-grid { grid-auto-flow: row; grid-template-columns: repeat(3, 1fr); overflow: visible; } }
@@ -176,7 +176,13 @@ p { margin: 0; }
 
 /* Thesis band */
 .thesis .wrap { display: grid; gap: 40px; }
-@media (min-width: 900px) { .thesis .wrap { grid-template-columns: 1fr 1fr; align-items: center; } .thesis-list { order: -1; } }
+@media (min-width: 900px) {
+  .thesis .wrap { grid-template-columns: 1fr 1fr; gap: clamp(48px, 7vw, 112px); align-items: start; }
+  .thesis-list { order: -1; margin-top: 6px; }
+  .thesis .section-head { padding-left: clamp(0px, 3vw, 48px); gap: 20px; }
+  .thesis .section-head h2 { font-size: clamp(2.6rem, 1.3rem + 2.9vw, 4rem); }
+  .thesis-list div { padding: 24px 0; }
+}
 .thesis h2 { font-size: var(--step-4); }
 .thesis-list { display: grid; gap: 0; border-top: 1px solid var(--line); }
 .thesis-list div { display: grid; grid-template-columns: 1fr auto; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
@@ -375,7 +381,7 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
         <p class="lede">We run your dating apps for you, from first match to booked date.</p>
         <div class="cta-row">
           <a class="btn btn-primary" href="#application">Apply now <span class="arrow">→</span></a>
-          <a class="btn btn-ghost" href="#start">Watch the introduction</a>
+          <a class="btn btn-ghost" href="#stories">Hear from clients</a>
         </div>
         <div class="pill-row" aria-label="What's included">
           <span>No swiping</span>
@@ -398,46 +404,6 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
           <div class="uc-row"><span>Where</span><span>Wine bar, table booked</span></div>
           <div class="uc-row"><span>Her note</span><span>"Can't wait, see you there!"</span></div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- START HERE: intro videos -->
-  <section class="section intro" id="start">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Start here</p>
-        <h2>Three short videos <em>before you apply</em></h2>
-        
-      </div>
-      <div class="intro-grid">
-        <figure>
-          <!-- VIDEO PLACEHOLDER: Intro 1 -->
-          <div class="video r-9x16" role="img" aria-label="Video placeholder: Who we work with">
-            <span class="v-tag">Intro 1</span>
-            <span class="play" aria-hidden="true"></span>
-            <div class="v-meta"><span class="v-title">Who we work with</span><span class="v-len">1:00</span></div>
-          </div>
-          <figcaption><b>Who we work with</b></figcaption>
-        </figure>
-        <figure>
-          <!-- VIDEO PLACEHOLDER: Intro 2 -->
-          <div class="video r-9x16" role="img" aria-label="Video placeholder: What we handle and what you do">
-            <span class="v-tag">Intro 2</span>
-            <span class="play" aria-hidden="true"></span>
-            <div class="v-meta"><span class="v-title">What we handle, what you do</span><span class="v-len">1:00</span></div>
-          </div>
-          <figcaption><b>What we handle, what you do</b></figcaption>
-        </figure>
-        <figure>
-          <!-- VIDEO PLACEHOLDER: Intro 3 -->
-          <div class="video r-9x16" role="img" aria-label="Video placeholder: Privacy and discretion">
-            <span class="v-tag">Intro 3</span>
-            <span class="play" aria-hidden="true"></span>
-            <div class="v-meta"><span class="v-title">Privacy &amp; discretion</span><span class="v-len">0:45</span></div>
-          </div>
-          <figcaption><b>Privacy &amp; discretion</b></figcaption>
-        </figure>
       </div>
     </div>
   </section>
@@ -552,6 +518,45 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
             <p class="your-part"><b>Your part</b> Show up.</p>
           </div>
         </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIENT VIDEOS -->
+  <section class="section intro" id="stories">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Client stories</p>
+        <h2>Hear it <em>from them</em></h2>
+      </div>
+      <div class="intro-grid">
+        <figure>
+          <!-- VIDEO PLACEHOLDER: Client testimonial 1 -->
+          <div class="video r-9x16" role="img" aria-label="Video placeholder: client testimonial 1">
+            <span class="v-tag">Client 1</span>
+            <span class="play" aria-hidden="true"></span>
+            <div class="v-meta"><span class="v-title">From matches to real dates</span><span class="v-len">1:00</span></div>
+          </div>
+          <figcaption><b>From matches to real dates</b></figcaption>
+        </figure>
+        <figure>
+          <!-- VIDEO PLACEHOLDER: Client testimonial 2 -->
+          <div class="video r-9x16" role="img" aria-label="Video placeholder: client testimonial 2">
+            <span class="v-tag">Client 2</span>
+            <span class="play" aria-hidden="true"></span>
+            <div class="v-meta"><span class="v-title">Getting my evenings back</span><span class="v-len">1:00</span></div>
+          </div>
+          <figcaption><b>Getting my evenings back</b></figcaption>
+        </figure>
+        <figure>
+          <!-- VIDEO PLACEHOLDER: Client testimonial 3 -->
+          <div class="video r-9x16" role="img" aria-label="Video placeholder: client testimonial 3">
+            <span class="v-tag">Client 3</span>
+            <span class="play" aria-hidden="true"></span>
+            <div class="v-meta"><span class="v-title">Why I'd recommend Katie</span><span class="v-len">1:00</span></div>
+          </div>
+          <figcaption><b>Why I'd recommend Katie</b></figcaption>
+        </figure>
       </div>
     </div>
   </section>
@@ -782,8 +787,8 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
         <div class="success" id="apply-success" hidden>
           <p class="eyebrow">Application received</p>
           <h3>Thank you, <span id="success-name">we'll be in touch</span>.</h3>
-          <p>Katie will review your application and reach out by email to book your private strategy call. In the meantime, watch the three intro videos if you haven't yet.</p>
-          <a class="btn btn-ghost" href="#start">Watch the intro videos</a>
+          <p>Katie will review your application and reach out by email to book your private strategy call. In the meantime, hear from clients who have been through it.</p>
+          <a class="btn btn-ghost" href="#stories">Watch client stories</a>
         </div>
       </div>
     </div>
@@ -798,16 +803,16 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
       </div>
       <div class="qa">
         <details>
+          <summary>How do you keep this confidential?</summary>
+          <p>Privacy is the default. We talk with you through a secure client channel and never share your details or photos without your approval. Only your concierge team works on your account. Every profile we build is truthful: your real photos, your real details. Nothing goes live and no date is booked without your yes.</p>
+        </details>
+        <details>
           <summary>Do I still get a say in who I meet?</summary>
           <p>Always. We send you the shortlist and you choose who you'd like to meet. Nothing is booked without your approval, and your profile doesn't go live until you've signed off on it.</p>
         </details>
         <details>
           <summary>Which dating apps do you work with?</summary>
           <p>We work on the major dating apps. Essential covers one platform, Executive covers up to three, and Private Elite adds Instagram and personal brand management. Platform subscriptions are paid separately by you.</p>
-        </details>
-        <details>
-          <summary>How do you keep this confidential?</summary>
-          <p>Privacy is the default. We communicate through a secure client channel, never share your details without approval, and every profile we build is truthful and represents you as you really are.</p>
         </details>
         <details>
           <summary>How much of my time does this take?</summary>

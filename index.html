@@ -217,14 +217,19 @@ p { margin: 0; }
 .wall { columns: 1; column-gap: 24px; }
 @media (min-width: 640px) { .wall { columns: 2; } }
 @media (min-width: 1000px) { .wall { columns: 3; } }
-.proof-card { break-inside: avoid; margin: 0 0 24px; display: grid; gap: 12px; }
+
 .proof-card button { all: unset; cursor: zoom-in; display: block; border-radius: 16px; }
 .proof-card button:focus-visible { outline: 2px solid var(--wine); outline-offset: 3px; }
 .proof-card img { width: 100%; height: auto; border-radius: 16px; border: 1px solid var(--line); box-shadow: 0 24px 50px -28px rgba(20, 10, 30, .5); }
-.proof-card figcaption { display: grid; gap: 4px; font-size: 0.95rem; color: var(--muted); }
-.proof-card figcaption b { color: var(--ink); font-size: var(--step-1); font-weight: 600; line-height: 1.3; }
 .src { justify-self: start; font-family: var(--mono); font-size: 0.7rem; letter-spacing: .1em; text-transform: uppercase; border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px; }
-.privacy-note { margin-top: 8px; font-size: 0.85rem; color: var(--muted); }
+.proof-card { break-inside: avoid; margin: 0 0 24px; }
+.proof-summary { margin-top: clamp(24px, 4vw, 40px); padding-top: 28px; border-top: 1px solid var(--line); display: grid; gap: 18px; }
+.proof-summary ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; }
+@media (min-width: 760px) { .proof-summary ul { grid-template-columns: repeat(3, 1fr); gap: 32px; } }
+.proof-summary li { display: grid; gap: 6px; }
+.proof-summary b { font-family: var(--display); font-size: var(--step-2); font-weight: 500; line-height: 1.15; }
+.proof-summary span { color: var(--muted); font-size: 0.95rem; }
+.privacy-note { margin-top: 24px; font-size: 0.85rem; color: var(--muted); }
 .zoom { border: 0; padding: 0; background: transparent; max-width: min(92vw, 720px); max-height: 92vh; }
 .zoom::backdrop { background: rgba(10, 8, 14, .85); }
 .zoom img { display: block; max-width: 100%; max-height: 88vh; width: auto; height: auto; border-radius: 14px; margin-inline: auto; }
@@ -552,30 +557,26 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
       <div class="section-head">
         <p class="eyebrow">Client results</p>
         <h2>In their <em>own words</em></h2>
-        <p class="lede">Real messages from clients and real accounts we manage. Tap any screenshot to enlarge it.</p>
+        <p class="lede">Real messages from clients and real accounts we manage. Tap any screenshot to read it in full.</p>
       </div>
 
       <div class="wall">
-        <figure class="proof-card">
-          <button type="button" data-zoom="assets/proof/andrew-email.webp" aria-label="Enlarge: I just show up for the dates."><img src="assets/proof/andrew-email.webp" width="1189" height="1100" loading="lazy" alt="Email from Andrew: I've never been great at messaging on the apps. I'd get matches, but conversations rarely led to dates. Since Katie started handling the messages, I'm getting a lot more dates. I'm happy I don't have to manage any of it now. I just show up for the dates."></button>
-          <figcaption><b>“I just show up for the dates.”</b>Andrew<span class="src">Email</span></figcaption>
-        </figure>
-        <figure class="proof-card">
-          <button type="button" data-zoom="assets/proof/tinder-inbox.webp" aria-label="Enlarge: So are we actually making plans?"><img src="assets/proof/tinder-inbox.webp" width="917" height="1716" loading="lazy" alt="Dating app inbox with five conversations waiting on a reply, including 'Okay, when are you taking me for coffee?' and 'So are we actually making plans?'"></button>
-          <figcaption><b>“So are we actually making plans?”</b>A client's inbox we manage<span class="src">Dating app</span></figcaption>
-        </figure>
-        <figure class="proof-card">
-          <button type="button" data-zoom="assets/proof/whatsapp-review.webp" aria-label="Enlarge: It still feels like my dating life, just without all the work."><img src="assets/proof/whatsapp-review.webp" width="901" height="1600" loading="lazy" alt="WhatsApp message from a client: The biggest difference has been how much time I have back. I'm getting more matches and actually going on dates. It still feels like my dating life, just without all the work that used to come with it. The best part is just showing up for the date."></button>
-          <figcaption><b>“It still feels like my dating life, just without all the work.”</b>Current client<span class="src">WhatsApp</span></figcaption>
-        </figure>
-        <figure class="proof-card">
-          <button type="button" data-zoom="assets/proof/chat-inbox.webp" aria-label="Enlarge: 286 likes and a full inbox"><img src="assets/proof/chat-inbox.webp" width="841" height="1870" loading="lazy" alt="Dating app chat list showing 286 likes and many conversations marked Your Turn, including 'Hi there, that sounds great but how late tho?' and 'Im very open to that idea'"></button>
-          <figcaption><b>286 likes and a full inbox</b>A client's account we manage<span class="src">Dating app</span></figcaption>
-        </figure>
-        <figure class="proof-card">
-          <button type="button" data-zoom="assets/proof/match-notifications.webp" aria-label="Enlarge: New matches overnight"><img src="assets/proof/match-notifications.webp" width="899" height="2000" loading="lazy" alt="Phone notifications overnight: new matches and new messages from several women"></button>
-          <figcaption><b>New matches overnight</b>A client's phone<span class="src">Notifications</span></figcaption>
-        </figure>
+        <figure class="proof-card"><button type="button" data-zoom="assets/proof/andrew-email.webp" aria-label="Enlarge screenshot"><img src="assets/proof/andrew-email.webp" width="1189" height="1100" loading="lazy" alt="Email from Andrew: I've never been great at messaging on the apps. Since Katie started handling the messages, I'm getting a lot more dates. I'm happy I don't have to manage any of it now. I just show up for the dates."></button></figure>
+        <figure class="proof-card"><button type="button" data-zoom="assets/proof/nathan-message.webp" aria-label="Enlarge screenshot"><img src="assets/proof/nathan-message.webp" width="910" height="1727" loading="lazy" alt="Message from Nathan: I used to overthink every message and barely get any dates. Now Katie's on it and I've actually got dates lined up. Katie handles the messages and sorts the dates, I just pick who I want to meet and show up. Includes a screenshot of his dating app inbox full of matches replying."></button></figure>
+        <figure class="proof-card"><button type="button" data-zoom="assets/proof/whatsapp-review.webp" aria-label="Enlarge screenshot"><img src="assets/proof/whatsapp-review.webp" width="901" height="1600" loading="lazy" alt="WhatsApp message from a client: The biggest difference has been how much time I have back. I'm getting more matches and actually going on dates. It still feels like my dating life, just without all the work that used to come with it."></button></figure>
+        <figure class="proof-card"><button type="button" data-zoom="assets/proof/michael-email.webp" aria-label="Enlarge screenshot"><img src="assets/proof/michael-email.webp" width="1295" height="1215" loading="lazy" alt="Email from Michael: Katie's Dating Concierge has saved me a lot of time. I'm getting more matches and going on dates without spending my evenings swiping and messaging. I decide who I'd like to meet, she handles the arrangements, and I just show up for the date."></button></figure>
+        <figure class="proof-card"><button type="button" data-zoom="assets/proof/tinder-inbox.webp" aria-label="Enlarge screenshot"><img src="assets/proof/tinder-inbox.webp" width="917" height="1716" loading="lazy" alt="Dating app inbox we manage with five conversations waiting on a reply, including 'Okay, when are you taking me for coffee?' and 'So are we actually making plans?'"></button></figure>
+        <figure class="proof-card"><button type="button" data-zoom="assets/proof/chat-inbox.webp" aria-label="Enlarge screenshot"><img src="assets/proof/chat-inbox.webp" width="841" height="1870" loading="lazy" alt="Dating app chat list we manage showing 286 likes and many conversations marked Your Turn"></button></figure>
+        <figure class="proof-card"><button type="button" data-zoom="assets/proof/match-notifications.webp" aria-label="Enlarge screenshot"><img src="assets/proof/match-notifications.webp" width="899" height="2000" loading="lazy" alt="A client's phone notifications overnight: new matches and new messages"></button></figure>
+      </div>
+
+      <div class="proof-summary">
+        <p class="eyebrow">What clients tell us</p>
+        <ul>
+          <li><b>More matches, more dates</b><span>"I've actually got dates lined up." Nathan</span></li>
+          <li><b>Their evenings back</b><span>"Without spending my evenings swiping and messaging." Michael</span></li>
+          <li><b>They just show up</b><span>"I'm happy I don't have to manage any of it now." Andrew</span></li>
+        </ul>
       </div>
       <p class="privacy-note">Names and photos are blurred to protect clients and their matches. Results vary from client to client.</p>
     </div>

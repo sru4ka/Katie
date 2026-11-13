@@ -126,6 +126,9 @@ p { margin: 0; }
   background-image: repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 3px);
 }
 .video.r-16x9 { aspect-ratio: 16 / 9; }
+.video.has-video { background: #000; }
+.video.has-video::after { display: none; }
+.video video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 .video.r-4x5 { aspect-ratio: 4 / 5; }
 .video.r-9x16 { aspect-ratio: 9 / 16; }
 .video .play {
@@ -432,11 +435,10 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
       <div class="steps">
         <article class="step">
           <div class="step-media">
-            <!-- VIDEO PLACEHOLDER: Step 1 -->
-            <div class="video r-16x9" role="img" aria-label="Video placeholder: Step 1, Discovery and strategy">
-              <span class="v-tag">Step 01</span>
-              <span class="play" aria-hidden="true"></span>
-              <div class="v-meta"><span class="v-title">Discovery &amp; strategy</span><span class="v-len">1:15</span></div>
+            <div class="video r-16x9 has-video">
+              <video controls playsinline preload="metadata" poster="assets/video/step-1.jpg" aria-label="Step 1: Getting to know you">
+                <source src="assets/video/step-1.mp4" type="video/mp4">
+              </video>
             </div>
           </div>
           <div class="step-body">
@@ -453,11 +455,10 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
 
         <article class="step">
           <div class="step-media">
-            <!-- VIDEO PLACEHOLDER: Step 2 -->
-            <div class="video r-16x9" role="img" aria-label="Video placeholder: Step 2, Profile creation">
-              <span class="v-tag">Step 02</span>
-              <span class="play" aria-hidden="true"></span>
-              <div class="v-meta"><span class="v-title">Building your profile</span><span class="v-len">1:20</span></div>
+            <div class="video r-16x9 has-video">
+              <video controls playsinline preload="metadata" poster="assets/video/step-2.jpg" aria-label="Step 2: Building your profile">
+                <source src="assets/video/step-2.mp4" type="video/mp4">
+              </video>
             </div>
           </div>
           <div class="step-body">
@@ -474,11 +475,10 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
 
         <article class="step">
           <div class="step-media">
-            <!-- VIDEO PLACEHOLDER: Step 3 -->
-            <div class="video r-16x9" role="img" aria-label="Video placeholder: Step 3, Matching and conversations">
-              <span class="v-tag">Step 03</span>
-              <span class="play" aria-hidden="true"></span>
-              <div class="v-meta"><span class="v-title">Matches &amp; conversations</span><span class="v-len">1:30</span></div>
+            <div class="video r-16x9 has-video">
+              <video controls playsinline preload="metadata" poster="assets/video/step-3.jpg" aria-label="Step 3: Matches and messages">
+                <source src="assets/video/step-3.mp4" type="video/mp4">
+              </video>
             </div>
           </div>
           <div class="step-body">
@@ -495,11 +495,10 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
 
         <article class="step">
           <div class="step-media">
-            <!-- VIDEO PLACEHOLDER: Step 4 -->
-            <div class="video r-16x9" role="img" aria-label="Video placeholder: Step 4, Date coordination">
-              <span class="v-tag">Step 04</span>
-              <span class="play" aria-hidden="true"></span>
-              <div class="v-meta"><span class="v-title">The date is booked</span><span class="v-len">1:00</span></div>
+            <div class="video r-16x9 has-video">
+              <video controls playsinline preload="metadata" poster="assets/video/step-4.jpg" aria-label="Step 4: Planning your date">
+                <source src="assets/video/step-4.mp4" type="video/mp4">
+              </video>
             </div>
           </div>
           <div class="step-body">

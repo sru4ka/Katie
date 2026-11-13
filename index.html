@@ -129,7 +129,7 @@ p { margin: 0; }
 .video.has-video { background: #000; }
 .video.yt::after { display: none; }
 .yt-cover { all: unset; position: absolute; inset: 0; cursor: pointer; display: block; color: var(--stage-fg); }
-.yt-cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.yt-cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
 .yt-cover::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,8,20,.15), rgba(10,8,20,.55)); }
 .yt-cover > span { z-index: 1; }
 .yt-cover:focus-visible { outline: 3px solid var(--wine); outline-offset: 3px; }
@@ -158,14 +158,15 @@ p { margin: 0; }
 /* Hero */
 .hero { padding-block: clamp(40px, 7vw, 96px) clamp(56px, 8vw, 104px); }
 .hero .wrap { display: grid; gap: clamp(40px, 6vw, 80px); align-items: center; }
-@media (min-width: 900px) { .hero .wrap { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 900px) { .hero .wrap { grid-template-columns: 1.1fr 0.9fr; } }
 .hero-copy { display: grid; gap: 24px; min-width: 0; }
 .hero h1 { font-size: clamp(2.8rem, 1.6rem + 5.4vw, 5.4rem); line-height: 1.02; }
 .hero .lede { font-size: var(--step-1); }
 .cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
 .pill-row { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 0.92rem; color: var(--muted); padding-top: 8px; border-top: 1px solid var(--line); }
 .pill-row span::before { content: "✓"; color: var(--wine); margin-right: 8px; font-weight: 700; }
-.hero-media { position: relative; min-width: 0; max-width: 620px; width: 100%; justify-self: center; display: grid; }
+.hero-media { position: relative; min-width: 0; max-width: 460px; width: 100%; justify-self: center; display: grid; transition: max-width .35s ease; }
+.hero-media.is-playing { max-width: 640px; }
 .update-card {
   position: relative; z-index: 2; justify-self: end; margin: -28px 12px 0 0; width: min(300px, 88%);
   background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 12px;
@@ -397,7 +398,7 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
 
       <div class="hero-media">
         <!-- Introduction video (YouTube, loads only when played) -->
-        <div class="video r-16x9 yt" id="intro-video" data-yt="aC9QriNukSk">
+        <div class="video r-4x5 yt" id="intro-video" data-yt="aC9QriNukSk">
           <button type="button" class="yt-cover" aria-label="Play the introduction video: Welcome to Katie's Dating Concierge">
             <img src="https://i.ytimg.com/vi/aC9QriNukSk/maxresdefault.jpg" alt="" width="1280" height="720">
             <span class="v-tag">Introduction</span>
@@ -855,6 +856,8 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
     f.title = "Welcome to Katie's Dating Concierge";
     f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
     f.allowFullscreen = true;
+    yt.classList.replace('r-4x5', 'r-16x9');
+    yt.closest('.hero-media').classList.add('is-playing');
     yt.innerHTML = ''; yt.appendChild(f);
   });
 

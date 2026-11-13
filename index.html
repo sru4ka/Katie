@@ -317,6 +317,7 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
 .chip input:focus-visible + span { outline: 2px solid var(--wine); outline-offset: 2px; }
 .form-nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
 .form-nav .btn[hidden] { display: none; }
+.form-error { margin-top: 16px; padding: 12px 14px; border-radius: 10px; background: var(--blush); color: var(--ink); font-size: 0.92rem; }
 .form-note { margin-top: 16px; font-size: 0.82rem; color: var(--muted); }
 .success { display: grid; gap: 14px; text-align: left; }
 .success h3 { font-size: var(--step-3); }
@@ -723,6 +724,8 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
             <button type="button" class="btn btn-primary" id="btn-next">Continue <span class="arrow">→</span></button>
             <button type="submit" class="btn btn-primary" id="btn-submit" hidden>Submit application</button>
           </div>
+          <input type="text" name="_honey" id="f-honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+          <p class="form-error" id="form-error" role="alert" hidden>Your application didn't send. Check your connection and try again, or email us at info@katiedatingconcierge.com.</p>
           <p class="form-note">By applying you agree to be contacted about your application. We never share your details.</p>
         </form>
 
@@ -825,17 +828,46 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
   next.addEventListener('click', function () { if (valid(current)) { show(current + 1); steps[current].querySelector('input, select, textarea').focus(); } });
   back.addEventListener('click', function () { show(current - 1); });
 
+  // Send applications to info@katiedatingconcierge.com via FormSubmit (no server needed)
+  var FORM_ENDPOINT = 'https://formsubmit.co/ajax/info@katiedatingconcierge.com';
+  var errBox = document.getElementById('form-error');
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (!valid(current)) return;
-    // TODO: send new FormData(form) to your CRM / email endpoint here.
-    var name = form.elements.name.value.trim();
-    document.getElementById('success-name').textContent = name || "we'll be in touch";
-    form.hidden = true;
-    document.querySelector('.progress').hidden = true;
-    document.getElementById('apply-success').hidden = false;
+    if (form.elements._honey.value) return; // bot trap
+    var fd = new FormData(form), get = function (k) { return (fd.get(k) || '').toString().trim(); };
+    var payload = {
+      _subject: 'New application: ' + get('name') + ', ' + get('city'),
+      _template: 'table',
+      _captcha: 'false',
+      _replyto: get('email'),
+      'First name': get('name'),
+      'Age': get('age'),
+      'City': get('city'),
+      'Occupation': get('occupation') || '-',
+      'Apps they use': fd.getAll('apps').join(', ') || '-',
+      'Looking for': get('goal'),
+      'Who they want to meet': get('ideal'),
+      'Hardest part of dating apps': get('frustration') || '-',
+      'Email': get('email'),
+      'Phone / WhatsApp': get('phone'),
+      'Package interest': get('plan'),
+      'Wants to start': get('start')
+    };
+    submit.disabled = true; submit.textContent = 'Sending...'; errBox.hidden = true;
+    fetch(FORM_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) })
+      .then(function (r) { return r.json().then(function (j) { if (!r.ok || String(j.success) === 'false') throw new Error(j.message || 'Send failed'); }); })
+      .then(function () {
+        document.getElementById('success-name').textContent = get('name') || "we'll be in touch";
+        form.hidden = true;
+        document.querySelector('.progress').hidden = true;
+        document.getElementById('apply-success').hidden = false;
+      })
+      .catch(function () {
+        errBox.hidden = false;
+        submit.disabled = false; submit.textContent = 'Submit application';
+      });
   });
-
 
   // Enlarge proof screenshots
   var zoom = document.getElementById('zoom'), zimg = document.getElementById('zoom-img');

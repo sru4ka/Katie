@@ -724,7 +724,7 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
             <button type="button" class="btn btn-primary" id="btn-next">Continue <span class="arrow">→</span></button>
             <button type="submit" class="btn btn-primary" id="btn-submit" hidden>Submit application</button>
           </div>
-          <input type="text" name="_honey" id="f-honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+          <input type="checkbox" name="botcheck" id="f-botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
           <p class="form-error" id="form-error" role="alert" hidden>Your application didn't send. Check your connection and try again, or email us at info@katiedatingconcierge.com.</p>
           <p class="form-note">By applying you agree to be contacted about your application. We never share your details.</p>
         </form>
@@ -828,19 +828,20 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
   next.addEventListener('click', function () { if (valid(current)) { show(current + 1); steps[current].querySelector('input, select, textarea').focus(); } });
   back.addEventListener('click', function () { show(current - 1); });
 
-  // Send applications to info@katiedatingconcierge.com via FormSubmit (no server needed)
-  var FORM_ENDPOINT = 'https://formsubmit.co/ajax/info@katiedatingconcierge.com';
+  // Send applications to info@katiedatingconcierge.com via Web3Forms (public access key, safe in client code)
+  var FORM_ENDPOINT = 'https://api.web3forms.com/submit';
+  var WEB3FORMS_KEY = '901cd7e5-2c40-454d-aa47-71e0f4c866ef';
   var errBox = document.getElementById('form-error');
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (!valid(current)) return;
-    if (form.elements._honey.value) return; // bot trap
+    if (form.elements.botcheck.checked) return; // bot trap
     var fd = new FormData(form), get = function (k) { return (fd.get(k) || '').toString().trim(); };
     var payload = {
-      _subject: 'New application: ' + get('name') + ', ' + get('city'),
-      _template: 'table',
-      _captcha: 'false',
-      _replyto: get('email'),
+      access_key: WEB3FORMS_KEY,
+      subject: 'New application: ' + get('name') + ', ' + get('city'),
+      from_name: "Katie's Dating Concierge website",
+      replyto: get('email'),
       'First name': get('name'),
       'Age': get('age'),
       'City': get('city'),
@@ -856,7 +857,7 @@ input:user-invalid, select:user-invalid { border-color: var(--wine); }
     };
     submit.disabled = true; submit.textContent = 'Sending...'; errBox.hidden = true;
     fetch(FORM_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload) })
-      .then(function (r) { return r.json().then(function (j) { if (!r.ok || String(j.success) === 'false') throw new Error(j.message || 'Send failed'); }); })
+      .then(function (r) { return r.json().then(function (j) { if (!r.ok || !j.success) throw new Error(j.message || 'Send failed'); }); })
       .then(function () {
         document.getElementById('success-name').textContent = get('name') || "we'll be in touch";
         form.hidden = true;
